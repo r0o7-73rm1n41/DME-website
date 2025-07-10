@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Quiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+    }
+
+    header {
+      background: linear-gradient(to right, #3b060e, #200307);
+      color: white;
+      padding: 40px 89px 33px;
+      position: relative;
+      text-align: center;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+
+    .logo img {
+      width: 12vw;
+      max-width: 80px;
+      height: auto;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        left: 5px;
+      }
+
+      .logo img {
+        width: 20vw;
+        max-width: 80px;
+      }
+    }
+
+    .container {
+      border: 3px solid red;
+      border-radius: 20px;
+      margin: 30px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .class {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .quiz-time {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .time-highlight {
+      background-color: #ffe6e6;
+      color: blue;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .progress-text {
+      color: #8b0000;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    .progress-bar {
+      height: 5px;
+      background: linear-gradient(to right, red 50%, #eee 50%);
+      margin: 10px auto;
+      border-radius: 10px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-top: 1px solid #ccc;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .price-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .price-left h6,
+    .price-left .price {
+      margin: 0;
+    }
+
+    .price-left .price {
+      color: red;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .join-btn {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 2px solid red;
+    }
+
+    .bottom-nav img,
+    .bottom-nav svg {
+      height: 30px;
+      width: 30px;
+    }
+
+    .trophy {
+      background-color: #ffffff;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+      background-color: #660000;
+      border-radius: 15px;
+      width: fit-content;
+      margin: 30px auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .countdown-item {
+      text-align: center;
+      color: white;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .countdown-item .icon {
+      font-size: 30px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .countdown-item span {
+      font-size: 28px;
+      font-weight: bold;
+      display: block;
+    }
+
+    .countdown-item .label {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .countdown-wrapper {
+        gap: 15px;
+        padding: 10px;
+      }
+
+      .countdown-item .icon {
+        font-size: 24px;
+      }
+
+      .countdown-item span {
+        font-size: 22px;
+      }
+    }
+
+    /* Spinner styles */
+    .spinner-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #00ff00;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="logo5.png" alt="Logo">
+    </div>
+    <h2>UPCOMING QUIZ</h2>
+  </header>
+
+  <div class="container">
+    <div class="class">Class 12th</div>
+    <div class="quiz-time">Quiz Starts In</div>
+    <div class="time-highlight">08:00 PM to 08:30 PM</div>
+
+    <div class="countdown-wrapper">
+      <div class="countdown-item">
+        <span class="icon">⏰</span>
+        <span id="hours">00</span>
+        <div class="label">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <span class="icon">🕑</span>
+        <span id="minutes">00</span>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <span class="icon">⏱️</span>
+        <span id="seconds">00</span>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="progress-text">Join 1000+ Students</div>
+    <div class="progress-bar"></div>
+
+    <div class="price-row">
+      <div class="price-left">
+        <h6>Join for</h6>
+        <div class="price">Rs. 5 Only</div>
+      </div>
+      <button class="join-btn">JOIN NOW</button>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <img src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png&color=000000" alt="Home">
+    <img src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png&color=000000" alt="Edit">
+    <div class="trophy">
+      <img src="https://img.icons8.com/?size=100&id=cRDlJeszVWm0&format=png&color=000000" alt="Trophy">
+    </div>
+    <img src="https://img.icons8.com/?size=100&id=52151&format=png&color=000000" alt="Check">
+    <img src="https://img.icons8.com/?size=100&id=85147&format=png&color=000000" alt="Profile">
+  </div>
+
+  <!-- Spinner Overlay -->
+  <div class="spinner-overlay" id="joinSpinner">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    // Countdown timer for 24 hours from page load
+    const countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+    const x = setInterval(function () {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+
+      if (distance < 0) {
+        clearInterval(x);
+        document.querySelector('.countdown-wrapper').innerHTML = "EXPIRED";
+        return;
+      }
+
+      const hours = String(Math.floor(distance / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }, 1000);
+
+    // Show spinner and redirect after 2 seconds
+    document.querySelector(".join-btn").addEventListener("click", function () {
+      document.getElementById("joinSpinner").style.display = "flex";
+      setTimeout(function () {
+        window.location.href = "login.html"; // change if needed
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>
