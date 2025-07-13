@@ -273,6 +273,434 @@
     }
   </style>
 </head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="imgs/logo-DME.png" alt="Logo" />
+    </div>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+    <h2>UPCOMING QUIZ</h2>
+  </header>
+
+  <div class="container">
+    <div class="class">Class 12th</div>
+    <div class="quiz-time">Quiz Starts In</div>
+    <div class="time-highlight">08:00 PM to 08:30 PM</div>
+
+    <div class="countdown-wrapper">
+      <div class="countdown-item">
+        <span class="icon">⏰</span>
+        <span id="hours">00</span>
+        <div class="label">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <span class="icon">🕑</span>
+        <span id="minutes">00</span>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <span class="icon">⏱️</span>
+        <span id="seconds">00</span>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="progress-text">1000+ Students Joined</div>
+    <div class="progress-bar"></div>
+
+    <div class="price-row">
+      <div class="price-left">
+        <h6>Join for</h6>
+        <div class="price">Rs. 5 Only</div>
+      </div>
+      <button class="join-btn">JOIN NOW</button>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <img src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png&color=000000" alt="Home" />
+    <img src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png&color=000000" alt="Edit" />
+    <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
+    <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
+    <img src="https://img.icons8.com/?size=100&id=85147&format=png&color=000000" alt="Profile" />
+  </div>
+
+  <div class="spinner-overlay" id="joinSpinner">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    function getNext8PM() {
+      const now = new Date();
+      const next8PM = new Date();
+      next8PM.setHours(20, 0, 0, 0);
+      if (now >= next8PM) {
+        next8PM.setDate(next8PM.getDate() + 1);
+      }
+      return next8PM;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const target = getNext8PM();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        document.querySelector(".countdown-wrapper").innerHTML = "<h3>QUIZ STARTED</h3>";
+        clearInterval(timer);
+        return;
+      }
+
+      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    document.querySelector(".join-btn").addEventListener("click", function () {
+      document.getElementById("joinSpinner").style.display = "flex";
+      setTimeout(function () {
+        window.location.href = "login.html";
+      }, 2000);
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function goToWinnersPage() {
+      localStorage.setItem("activeTab", "check");
+      window.location.href = "winners.html";
+    }
+
+    function goToMainPage() {
+      localStorage.setItem("activeTab", "trophy");
+      window.location.href = "index.html";
+    }
+
+    function highlightNavIcons() {
+      const activeTab = localStorage.getItem("activeTab");
+      const checkIcon = document.getElementById("checkNav");
+      const trophyIcon = document.getElementById("trophyNav");
+
+      if (checkIcon) {
+        checkIcon.src = activeTab === "check" ? "imgs/icon-check-green.png" : "imgs/icon-check-black.png";
+      }
+
+      if (trophyIcon) {
+        trophyIcon.src = activeTab === "trophy" ? "imgs/icon-cup.png" : "imgs/icon-cup-black.png";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", highlightNavIcons);
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Quiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #000;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background: linear-gradient(to right, #3b060e, #200307);
+      color: white;
+      padding: 40px 20px 33px;
+      position: relative;
+      text-align: center;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+
+    .logo img {
+      width: 60px;
+      max-width: 80px;
+      height: auto;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .container {
+      border: 3px solid red;
+      border-radius: 20px;
+      margin: 30px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      background-color: #fff;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark .container {
+      background-color: #1e1e1e;
+    }
+
+    .class {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .quiz-time {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .time-highlight {
+      background-color: #ffe6e6;
+      color: blue;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .progress-text {
+      color: #8b0000;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    .progress-bar {
+      height: 5px;
+      background: linear-gradient(to right, red 50%, #eee 50%);
+      margin: 10px auto;
+      border-radius: 10px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-top: 1px solid #ccc;
+    }
+
+    .price-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .price-left h6,
+    .price-left .price {
+      margin: 0;
+    }
+
+    .price-left .price {
+      color: red;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .join-btn {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 2px solid red;
+      z-index: 99;
+      transition: background 0.3s ease;
+    }
+
+    body.dark .bottom-nav {
+      background: #222;
+    }
+
+    .bottom-nav img {
+      height: 30px;
+      width: 30px;
+    }
+
+    .trophy {
+      background-color: transparent;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      background-color: #660000;
+      border-radius: 15px;
+      width: fit-content;
+      margin: 30px auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      text-align: center;
+      color: white;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .countdown-item .icon {
+      font-size: 30px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .countdown-item span {
+      font-size: 28px;
+      font-weight: bold;
+      display: block;
+    }
+
+    .countdown-item .label {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .spinner-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #00ff00;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 500px) {
+      .countdown-wrapper {
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .countdown-item .icon {
+        font-size: 22px;
+      }
+
+      .countdown-item span {
+        font-size: 20px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      header h2 {
+        font-size: 20px;
+      }
+
+      .dark-toggle {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
 <body>
   <header>
     <div class="logo">
@@ -411,9 +839,9 @@
       document.body.classList.toggle("dark");
     }
   </script> -->
-</body>
+<!-- </body>
 </html>
-
+ -->
 
 
 
