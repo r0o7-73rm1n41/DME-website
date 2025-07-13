@@ -1,5 +1,286 @@
-
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Mind - Login/Register</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #3b060e, #200307, #000000);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark {
+      background: #121212;
+      color: #eee;
+    }
+
+    .back-btn, .dark-toggle {
+      position: absolute;
+      top: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .back-btn {
+      left: 20px;
+    }
+
+    .dark-toggle {
+      right: 20px;
+    }
+
+    .login-box {
+      max-width: 400px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    body.dark .login-box {
+      background-color: #1e1e1e;
+    }
+
+    .logo {
+      margin-bottom: 15px;
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    .logo img {
+      width: 100px;
+      height: auto;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #f4f4f4;
+      color: #000;
+    }
+
+    body.dark input, body.dark select {
+      background: #2b2b2b;
+      color: #eee;
+      border: 1px solid #555;
+    }
+
+    button.auth-btn {
+      width: 100%;
+      background: green;
+      color: white;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    button.auth-btn:hover {
+      background: #008000;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    footer button {
+      background: transparent;
+      border: 1px solid #888;
+      color: white;
+      padding: 8px 16px;
+      margin: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    footer button:hover {
+      background-color: #444;
+    }
+
+    .spinner-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #00ff00;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 500px) {
+      .login-box {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .dark-toggle, .back-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="history.back()">← Back</button>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+
+  <div class="login-box">
+    <div class="logo">
+      <img src="logo-DME-dark.png" alt="Logo" />
+    </div>
+
+    <h1>Daily Mind</h1>
+    <h2>Login/Register</h2>
+    <p>Let’s Get You Started</p>
+
+    <form id="loginForm">
+      <input type="text" name="username" placeholder="Enter Your Name" required />
+
+      <select name="class" required>
+        <option value="" disabled selected>Please Select Your Class</option>
+        <option value="10">Class 10</option>
+        <option value="11">Class 11</option>
+        <option value="12">Class 12</option>
+      </select>
+
+      <input type="text" name="institute" placeholder="Enter Your Coaching / School Name" required />
+      <input type="text" name="district" placeholder="Enter District Name" required />
+      <input type="text" name="pincode" placeholder="Pincode" pattern="\d{6}" required />
+
+      <button type="submit" class="auth-btn">Save Details</button>
+    </form>
+  </div>
+
+  <div class="spinner-overlay" id="spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <footer> 
+    <button onclick="window.location.href='policy.html'">Policy</button>
+    <button onclick="window.location.href='help.html'">Help</button>
+  </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      document.getElementById("spinner").style.display = "flex";
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
+      localStorage.setItem("userDetails", JSON.stringify(data));
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- v2 -->
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -253,7 +534,7 @@
     }
   </script>
 </body>
-</html> 
+</html>  -->
 
 
 
