@@ -465,15 +465,15 @@
 </head>
 <body>
 
-  <!-- 🔙 Back and 🌙 Dark Mode Buttons -->
+   // 🔙 Back and 🌙 Dark Mode Buttons
   <button class="back-btn" onclick="history.back()">← Back</button>
   <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
 
   <div class="login-box">
-    <!-- ✅ Animated Logo -->
+     ✅ Animated Logo 
     <div class="logo">
       <img src="logo-DME-dark.png" alt="Logo" />
-      <!-- # Replace 'your-logo-path.png' with correct relative path to the brain bulb logo  -->
+      <!-- # Replace 'your-logo-path.png' with correct relative path to the brain bulb logo  
     </div>
 
     <h1>Daily Mind</h1>
@@ -498,23 +498,23 @@
     </form>
   </div> 
 
-  <!-- ⏳ Loading Spinner -->
+  <!-- ⏳ Loading Spinner
   <div class="spinner-overlay" id="spinner">
     <div class="spinner"></div>
   </div>
 
-  <!-- 📄 Footer Links -->
+  <!-- 📄 Footer Links 
     <footer> 
     <button onclick="window.location.href='policy.html'">Policy</button>
     <button onclick="window.location.href='help.html'">Help</button>
   </footer>
 
-  <!-- 🔁 Scripts -->
+   🔁 Scripts 
   <script>
     document.getElementById("loginForm").addEventListener("submit", function (e) {
       e.preventDefault(); 
 
-      <!-- // Show spinner -->
+      // Show spinner 
       document.getElementById("spinner").style.display = "flex";
 
       // Store user data
@@ -523,7 +523,7 @@
       formData.forEach((value, key) => data[key] = value);
       localStorage.setItem('userDetails', JSON.stringify(data));
 
-      // Redirect after delay
+     // // Redirect after delay
       setTimeout(function () {
         window.location.href = "index.html";
       }, 2000);
@@ -534,7 +534,7 @@
     }
   </script>
 </body>
-</html>  -->
+</html> 
 
 
 
