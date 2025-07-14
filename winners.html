@@ -1,3 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Winners - Quiz Class 10th</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #000;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background: linear-gradient(to right, #3b060e, #200307);
+      color: white;
+      padding: 40px 20px 33px;
+      position: relative;
+      text-align: center;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+
+    .logo img {
+      width: 60px;
+      max-width: 80px;
+      height: auto;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .container {
+      border: 3px solid red;
+      border-radius: 20px;
+      margin: 30px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      background-color: #fff;
+      transition: background 0.3s ease, color 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark .container {
+      background-color: #1e1e1e;
+    }
+
+    .container h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .trophy-icon {
+      font-size: 50px;
+      margin: 15px 0;
+    }
+
+    .winner {
+      font-size: 16px;
+      padding: 10px 0;
+    }
+
+    .gold::before { content: "🥇 "; }
+    .silver::before { content: "🥈 "; }
+    .bronze::before { content: "🥉 "; }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 2px solid red;
+      z-index: 99;
+      transition: background 0.3s ease;
+    }
+
+    body.dark .bottom-nav {
+      background: #222;
+    }
+
+    .bottom-nav img {
+      height: 30px;
+      width: 30px;
+    }
+
+    .trophy {
+      background-color: transparent;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 15px;
+      }
+
+      header h2 {
+        font-size: 20px;
+      }
+
+      .dark-toggle {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .winner {
+        font-size: 14px;
+      }
+
+      .trophy-icon {
+        font-size: 36px;
+      }
+    }
+
+
+
 .info-box {
   max-width: 95%;
   margin: 40px auto 100px;
@@ -92,6 +241,106 @@ body.dark .info-box .fee {
     padding: 10px;
   }
 }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="imgs/logo-DME.png" alt="Logo">
+    </div>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+    <h2>Quiz Class 10th</h2>
+  </header>
+
+  <div class="container">
+    <h3>The Quiz “Class 10th” has finished</h3>
+    <p>50 questions answered</p>
+    <div class="trophy-icon">🏆</div>
+    <h4>Congratulations to the winners!</h4>
+    <div class="winner gold">Pramod Kumar - 25 (5 min 48 sec)</div>
+    <div class="winner silver">Gulshan Singh Rajput - 25 (5 min 50 sec)</div>
+    <div class="winner bronze">Suman Kumar - 25 (6 min 02 sec)</div>
+  </div>
+
+<div class="info-box">
+  <h3>✨ <span class="highlight">भागलपुर जिला</span> के छात्रों के लिए <span class="highlight">सुनहरा अवसर</span> ✨</h3>
+
+  <p>क्योंकि भागलपुर जिला में होने जा रहा है <strong>Daily Mind प्रतियोगिता परीक्षा</strong>, जिसमें <strong>मात्र 2000 छात्र</strong> भाग ले पाएंगे।</p>
+
+  <p>प्रतियोगिता परीक्षा <strong>दो लेवल</strong> में होगी:</p>
+  <ul>
+    <li>📘 10th Level</li>
+    <li>📗 12th Level</li>
+  </ul>
+
+  <p><strong>ग्रैजुएशन</strong> तक के कोई भी छात्र इस परीक्षा में भाग ले सकते हैं।</p>
+
+  <p>🏆 कुल <strong>20 छात्र विजेता</strong> होंगे, जिनमें <strong>6 को बड़े पुरस्कार</strong> मिलेंगे:</p>
+  <ul>
+    <li>🥇 प्रथम पुरस्कार (2 छात्र): ₹10,000/-</li>
+    <li>🥈 द्वितीय पुरस्कार (2 छात्र): ₹5,000/-</li>
+    <li>🥉 तृतीय पुरस्कार (2 छात्र): ₹2,500/-</li>
+  </ul>
+
+  <p>🔸 बाकी <strong>14 छात्रों को ₹500/-</strong> और <span class="green">सभी 20 छात्रों को कंप्यूटर कोर्स फ्री</span></p>
+
+  <p>📘 <strong>PDF Notes फ्री</strong> – जिस भी कक्षा या विषय के होंगे, माँगे जाने पर दिए जाएंगे।</p>
+
+  <p class="fee"><strong>💰 रजिस्ट्रेशन शुल्क: ₹100/- मात्र</strong></p>
+
+  <div class="contact">
+    <p>📲 <strong>WhatsApp / Call:</strong> 8578986352</p>
+    <p>📧 <strong>Email:</strong> dailymind.edu@gmail.com</p>
+  </div>
+</div>
+
+  <div class="bottom-nav">
+    <img src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png&color=000000" alt="Home" />
+    <img src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png&color=000000" alt="Edit" />
+    <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
+    <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
+    <img src="https://img.icons8.com/?size=100&id=85147&format=png&color=000000" alt="Profile" />
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function goToWinnersPage() {
+      localStorage.setItem("activeTab", "check");
+      window.location.href = "winners.html";
+    }
+
+    function goToMainPage() {
+      localStorage.setItem("activeTab", "trophy");
+      window.location.href = "quiz.html";
+    }
+
+    function highlightNavIcons() {
+      const activeTab = localStorage.getItem("activeTab");
+      const checkIcon = document.getElementById("checkNav");
+      const trophyIcon = document.getElementById("trophyNav");
+
+      if (checkIcon) {
+        checkIcon.src = activeTab === "check"
+          ? "imgs/icon-check-green.png"
+          : "imgs/icon-check-black.png";
+      }
+
+      if (trophyIcon) {
+        trophyIcon.src = activeTab === "trophy"
+          ? "imgs/icon-cup.png"
+          : "imgs/icon-cup-black.png";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", highlightNavIcons);
+  </script>
+</body>
+</html>
+
 
 
 
