@@ -1,4 +1,117 @@
-<!DOCTYPE html>
+.info-box {
+  max-width: 95%;
+  margin: 40px auto 100px;
+  background: linear-gradient(135deg, #fff7f7, #fefefe);
+  border-left: 6px solid red;
+  padding: 25px;
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #111;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  animation: fadeInSlide 0.7s ease-in-out;
+}
+
+body.dark .info-box {
+  background: linear-gradient(135deg, #1f1f1f, #292929);
+  color: #ddd;
+  border-left-color: #ff5555;
+}
+
+.info-box h3 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #b30000;
+}
+
+.info-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 15px 0;
+}
+
+.info-box ul li {
+  margin: 5px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+
+.info-box .highlight {
+  color: #d40000;
+  font-weight: 600;
+}
+
+.info-box .green {
+  color: green;
+  font-weight: 600;
+}
+
+.info-box .fee {
+  background: #fff0f0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #b30000;
+  margin-top: 20px;
+  font-size: 17px;
+}
+
+body.dark .info-box .fee {
+  background: #2b0f0f;
+}
+
+.info-box .contact p {
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .info-box {
+    font-size: 15px;
+    padding: 20px;
+  }
+
+  .info-box h3 {
+    font-size: 18px;
+  }
+
+  .info-box .fee {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- v1 -->
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -210,3 +323,4 @@
   </script>
 </body>
 </html>
+ -->
