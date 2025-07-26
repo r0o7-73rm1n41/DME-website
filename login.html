@@ -213,15 +213,17 @@
 
     <form id="loginForm">
       <input type="text" name="username" placeholder="Enter Your Name" required />
+      <input type="tel" id="phone" maxlength="10" placeholder="+91 1234567890" required pattern="\d{10}" />
+<!--       <input type="text" name="monilenumber" placeholder="Enter Your Mobile Number" required /> -->
 
       <select name="class" required>
         <option value="" disabled selected>Please Select Your Class</option>
         <option value="10">Class 10</option>
-        <option value="11">Class 11</option>
+<!--         <option value="11">Class 11</option> -->
         <option value="12">Class 12</option>
       </select>
 
-      <input type="text" name="institute" placeholder="Enter Your Coaching / School Name" required />
+      <input type="text" name="institute" placeholder="Enter Your School / Coaching Name" required />
       <input type="text" name="district" placeholder="Enter District Name" required />
       <input type="text" name="pincode" placeholder="Pincode" pattern="\d{6}" required />
 
