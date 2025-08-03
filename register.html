@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Mind - OTP Register/Login</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Body & Dark Mode */
+    body {
+      background: linear-gradient(to bottom, #3b060e, #200307, #000000);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      transition: background 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+    body.dark {
+      background: #121212;
+      color: #eee;
+    }
+
+    /* Buttons: Back & Dark Toggle */
+    .back-btn, .dark-toggle {
+      position: fixed;
+      top: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 1000;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    .back-btn:hover, .dark-toggle:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .back-btn {
+      left: 20px;
+    }
+    .dark-toggle {
+      right: 20px;
+    }
+
+    /* Container */
+    .login-box {
+      max-width: 400px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      margin-top: 80px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    body.dark .login-box {
+      background-color: #1e1e1e;
+    }
+
+    /* Logo */
+    .logo {
+      margin-bottom: 15px;
+      animation: pulse 3s infinite ease-in-out;
+      user-select: none;
+    }
+    .logo img {
+      width: 100px;
+      height: auto;
+      user-select: none;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+    h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: normal;
+      color: #ccc;
+    }
+    p {
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    /* Inputs */
+    input[type="tel"],
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #f4f4f4;
+      color: #000;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark input[type="tel"],
+    body.dark input[type="text"] {
+      background: #2b2b2b;
+      color: #eee;
+      border: 1px solid #555;
+    }
+    input::placeholder {
+      color: #666;
+    }
+
+    /* Buttons */
+    button.auth-btn {
+      width: 100%;
+      background: green;
+      color: white;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    button.auth-btn:hover:not(:disabled) {
+      background: #008000;
+    }
+    button.auth-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+
+    /* Hidden */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Spinner Overlay */
+    .spinner-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      user-select: none;
+    }
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #00ff00;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      user-select: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      user-select: none;
+    }
+    footer button {
+      background: transparent;
+      border: 1px solid #888;
+      color: white;
+      padding: 8px 16px;
+      margin: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+      user-select: none;
+    }
+    footer button:hover {
+      background-color: #444;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .login-box {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      h2 {
+        font-size: 18px;
+      }
+      .dark-toggle, .back-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      button.auth-btn {
+        font-size: 16px;
+        padding: 10px;
+      }
+      input[type="tel"],
+      input[type="text"] {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back and Dark Mode Buttons -->
+  <button class="back-btn" aria-label="Go Back" onclick="window.location.href='index.html'">← Back</button>
+  <button class="dark-toggle" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">🌙</button>
+
+  <main class="login-box" role="main" aria-label="OTP Register or Login Form">
+    <div class="logo">
+      <img src="imgs/logo-DME-dark.png" alt="Daily Mind Logo" />
+    </div>
+
+    <h1>Daily Mind</h1>
+    <h2>Register/Login via OTP</h2>
+    <p>Enter your 10-digit mobile number</p>
+
+    <input
+      type="tel"
+      id="phone"
+      maxlength="10"
+      placeholder="e.g. 1234567890"
+      required
+      pattern="\d{10}"
+      aria-label="Enter 10-digit mobile number"
+      autocomplete="tel-national"
+      inputmode="numeric"
+    />
+    <button class="auth-btn" id="sendBtn" onclick="sendOTP()">Send OTP</button>
+
+    <div id="otpSection" class="hidden" aria-live="polite" aria-atomic="true">
+      <input
+        type="text"
+        id="otp"
+        maxlength="6"
+        placeholder="Enter OTP"
+        aria-label="Enter OTP"
+        autocomplete="one-time-code"
+        inputmode="numeric"
+      />
+      <button class="auth-btn" id="verifyBtn" onclick="verifyOTP()">Verify OTP</button>
+    </div>
+  </main>
+
+  <div class="spinner-overlay" id="spinner" aria-hidden="true">
+    <div class="spinner" role="progressbar" aria-label="Loading"></div>
+  </div>
+
+  <footer>
+    <button onclick="window.location.href='policy.html'">Policy</button>
+    <button onclick="window.location.href='help.html'">Help</button>
+  </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function showSpinner(show) {
+      const spinner = document.getElementById("spinner");
+      spinner.style.display = show ? "flex" : "none";
+      spinner.setAttribute("aria-hidden", !show);
+    }
+
+    function sendOTP() {
+      const phoneInput = document.getElementById("phone");
+      const phone = phoneInput.value.trim();
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        phoneInput.focus();
+        return;
+      }
+
+      showSpinner(true);
+
+      // Mock sending OTP
+      setTimeout(() => {
+        showSpinner(false);
+        document.getElementById("otpSection").classList.remove("hidden");
+        document.getElementById("sendBtn").classList.add("hidden");
+        alert("OTP sent successfully (mock-test).");
+        document.getElementById("otp").focus();
+      }, 1500);
+    }
+
+    function verifyOTP() {
+      const otpInput = document.getElementById("otp");
+      const otp = otpInput.value.trim();
+
+      if (otp.length < 4 || !/^\d+$/.test(otp)) {
+        alert("Please enter a valid OTP.");
+        otpInput.focus();
+        return;
+      }
+
+      showSpinner(true);
+
+      // Mock verify OTP
+      setTimeout(() => {
+        showSpinner(false);
+        // Save a session mock
+        localStorage.setItem("session", JSON.stringify({ phoneVerified: true }));
+        alert("OTP verified successfully!");
+        window.location.href = "index.html";
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
