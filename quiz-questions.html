@@ -189,11 +189,11 @@
   </div>
 
   <div class="bottom-nav">
-    <img src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png" alt="Home" />
-    <img src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png" alt="Edit" />
+    <img id="Home" src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png" alt="Home" onclick="goToHomePage()" />
+    <img id="Edit" src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png" alt="Edit" onclick="goToEditPage()" />
     <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
     <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
-    <img src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" />
+    <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" onclick="goToProfilePage()" />
   </div>
 
   <script>
@@ -288,14 +288,29 @@
       document.body.classList.toggle("dark");
     }
 
-    function goToWinnersPage() {
-      localStorage.setItem("activeTab", "check");
-      window.location.href = "winners.html";
+   function goToHomePage() {
+      localStorage.setItem("activeTab", "home");
+      // window.location.href = "home.html";
+    }
+
+    function goToEditPage() {
+      localStorage.setItem("activeTab", "edit");
+      // window.location.href = "Edit.html";
     }
 
     function goToMainPage() {
       localStorage.setItem("activeTab", "trophy");
       window.location.href = "index.html";
+    }
+
+    function goToWinnersPage() {
+      localStorage.setItem("activeTab", "check");
+      window.location.href = "winners.html";
+    }
+
+    function goToProfilePage() {
+      localStorage.setItem("activeTab", "profile");
+      window.location.href = "profile.html";
     }
 
     function highlightNavIcons() {
