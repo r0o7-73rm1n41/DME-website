@@ -2,6 +2,563 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Page - Class 10th</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #fff;
+      color: #000;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    body.dark {
+      background-color: #121212;
+      color: #eee;
+    }
+    header {
+      background: linear-gradient(to right, #3b060e, #200307);
+      color: white;
+      padding: 40px 20px 33px;
+      position: relative;
+      text-align: center;
+    }
+    .logo {
+      position: absolute; top: 10px; left: 20px;
+    }
+    .logo img {
+      width: 60px; height: auto;
+    }
+    .dark-toggle {
+      position: absolute; top: 15px; right: 20px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      padding: 8px 15px;
+      border: none; border-radius: 20px;
+      font-size: 14px; cursor: pointer;
+    }
+    .container {
+      border: 3px solid red;
+      border-radius: 20px;
+      margin: 30px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      background-color: #fff;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    body.dark .container {
+      background-color: #1e1e1e;
+    }
+    .question-counter, .question-time {
+      font-size: 16px;
+      margin: 5px 0;
+      font-weight: 600;
+    }
+    .timer-circle {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      background: radial-gradient(circle, #333, #111);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: yellow;
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .question-text {
+      background-color: #4d0000;
+      color: white;
+      padding: 15px;
+      margin: 20px auto;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .option-btn {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 20px;
+      border: 2px solid black;
+      background: #fff;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    .option-btn:hover:not(:disabled) {
+      background-color: #f8d7da; /* pink on hover */
+    }
+    .option-btn.wrong {
+      background-color: #dc3545; /* red if wrong clicked */
+      color: white;
+      border-color: #b02a37;
+    }
+    .option-btn:disabled {
+      background: #eee;
+      color: #999;
+      cursor: not-allowed;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 2px solid red;
+      z-index: 99;
+      transition: background 0.3s ease;
+    }
+    body.dark .bottom-nav {
+      background: #222;
+    }
+    .bottom-nav img {
+      height: 30px;
+      width: 30px;
+      cursor: pointer;
+    }
+    @media (max-width: 500px) {
+      .options {
+        grid-template-columns: 1fr;
+      }
+      .question-text {
+        font-size: 16px;
+      }
+      header h2 {
+        font-size: 20px;
+      }
+      .dark-toggle {
+        padding: 6px 12px;
+      }
+    }
+
+
+    :root {
+  --drawer-width: 320px;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --drawer-bg-light: #fff;
+  --drawer-bg-dark: #1f1f1f;
+  --drawer-text-light: #000;
+  --drawer-text-dark: #eee;
+  --sidebar-item-bg-light: #f7f7f7;
+  --sidebar-item-bg-dark: #2b2b2b;
+  --sidebar-item-hover-light: #e0e0e0;
+  --sidebar-item-hover-dark: #444;
+  --sidebar-item-text-light: #000;
+  --sidebar-item-text-dark: #ddd;
+}
+
+/* Drawer styles */
+/* Drawer styles */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: var(--drawer-width);
+  height: 100%;
+  background: #200307;  /* Deep red color for the drawer */
+  color: #fff;  /* White text color */
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  transition: right var(--transition);
+  z-index: 100;
+  overflow-y: auto;
+}
+
+body.dark .drawer {
+  background: #200307;  /* Darker red for dark mode */
+  color: #eee;  /* Lighter text color in dark mode */
+}
+
+.drawer.open {
+  right: 0;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Drawer header */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer h2 {
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Profile Pic */
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px auto;
+  background-image: url('https://i.pravatar.cc/100');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Info */
+.profile-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-info h3 {
+  margin-bottom: 5px;
+  font-size: 1.3rem;
+}
+
+/* Sidebar Items */
+.sidebar-item {
+  background: var(--sidebar-item-bg-light);
+  color: var(--sidebar-item-text-light);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+body.dark .sidebar-item {
+  background: var(--sidebar-item-bg-dark);
+  color: var(--sidebar-item-text-dark);
+}
+
+.sidebar-item:hover {
+  background: var(--sidebar-item-hover-light);
+}
+
+body.dark .sidebar-item:hover {
+  background: var(--sidebar-item-hover-dark);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 400px) {
+  .drawer {
+    width: 100vw;
+  }
+}
+
+
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="imgs/logo-DME.png" alt="Logo" />
+    </div>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+    <h2>Quiz Class 10th</h2>
+  </header>
+
+  <div class="container">
+    <div class="question-counter" id="qCounter">प्रश्न 1/4</div>
+    <div class="question-time" id="qTime"></div>
+    <div class="timer-circle" id="countdown">15</div>
+
+    <div class="question-text" id="questionText">Loading...</div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <img id="Home" src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png" alt="Home" onclick="goToHomePage()" />
+    <img id="Edit" src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png" alt="Edit" onclick="goToEditPage()" />
+    <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
+    <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
+    <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" />
+<!--     <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" onclick="goToProfilePage()" /> -->
+  </div>
+
+  <!-- Profile Drawer -->
+<aside class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h2>Profile</h2>
+    <button class="close-btn" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="profile-pic"></div>
+  <div class="profile-info">
+    <h3>Username</h3>
+    <p>example@user.com</p>
+  </div>
+  <div class="sidebar-item">👤 Edit Profile</div>
+  <div class="sidebar-item">📜 My Quizzes</div>
+  <div class="sidebar-item">💳 Payment History</div>
+  <div class="sidebar-item">⚙️ Settings</div>
+  <div class="sidebar-item">🚪 Logout</div>
+</aside>
+
+
+  <script>
+    const questions = [
+      {
+        question: "इटली तथा जर्मनी वर्तमान में किस महादेश के अन्तर्गत आते हैं ?",
+        options: ["उत्तरी अमेरिका", "दक्षिणी अमेरिका", "यूरोप", "पश्चिमी एशिया"],
+        answer: "यूरोप"
+      },
+      {
+        question: "फ्रांस में किस शासन वंश की पुन: स्थापना वियना कांग्रेस द्वारा की गई थी?",
+        options: ["हैप्सबर्ग", "आर्लिया वंश", "बूर्बो वंश", "जारशाही"],
+        answer: "बूर्बो वंश"
+      },
+      {
+        question: "मेजिनी का संबंध किस संगठन से था ?",
+        options: ["लाल सेना", "कार्बोनरी", "फिलिक हेटारिया", "डायट"],
+        answer: "कार्बोनरी"
+      },
+      {
+        question: "इटली एवं जर्मनी के एकीकरण के विरुद्ध निम्न में कौन था?",
+        options: ["इंग्लैण्ड", "रूस", "आस्ट्रिया", "प्रशा"],
+        answer: "आस्ट्रिया"
+      }
+    ];
+
+    let current = 0;
+    let countdown = 15;
+    let interval;
+    let answered = false;
+    let score = 0;
+    let switchCount = 0;
+
+    const questionText = document.getElementById("questionText");
+    const optionsContainer = document.getElementById("options");
+    const timerEl = document.getElementById("countdown");
+    const counterEl = document.getElementById("qCounter");
+    const qTime = document.getElementById("qTime");
+
+    function updateClock() {
+      qTime.textContent = new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function loadQuestion(i) {
+      answered = false;
+      updateClock();
+
+      const q = questions[i];
+      questionText.textContent = q.question;
+      counterEl.textContent = `प्रश्न ${i + 1} / ${questions.length}`;
+      optionsContainer.innerHTML = "";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.className = "option-btn";
+        btn.disabled = false;
+        btn.onclick = () => handleSelect(btn, q.answer);
+        optionsContainer.appendChild(btn);
+      });
+
+      countdown = 15;
+      timerEl.textContent = countdown;
+
+      clearInterval(interval);
+      interval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      countdown--;
+      timerEl.textContent = countdown;
+      updateClock();
+
+      if (countdown <= 0) {
+        clearInterval(interval);
+
+        if (!answered) {
+          disableOptions();
+          setTimeout(nextQuestion, 2000);
+        } else {
+          nextQuestion();
+        }
+      }
+    }
+
+    function handleSelect(btn, correctAnswer) {
+      if (answered) return;
+      answered = true;
+
+      const allBtns = document.querySelectorAll(".option-btn");
+      allBtns.forEach(b => {
+        b.disabled = true;
+      });
+
+      if (btn.textContent !== correctAnswer) {
+        btn.classList.add("wrong");
+      }
+      // correct answer keeps default styling, no green color
+    }
+
+    function disableOptions() {
+      document.querySelectorAll(".option-btn").forEach(b => {
+        b.disabled = true;
+      });
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < questions.length) {
+        loadQuestion(current);
+      } else {
+        showFinalScore();
+      }
+    }
+
+    function showFinalScore() {
+      questionText.textContent = "🎉 Quiz पूर्ण हुआ!";
+      optionsContainer.innerHTML = `
+        <p style="font-size:18px; margin-top: 20px;">
+          आपका स्कोर: ${score} / ${questions.length}
+        </p>`
+      timerEl.textContent = "✅";
+      counterEl.textContent = "";
+      qTime.textContent = "";
+    }
+
+    function restartQuiz() {
+      current = 0;
+      score = 0;
+      loadQuestion(current);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    window.addEventListener("contextmenu", e => e.preventDefault());
+
+    window.addEventListener("keydown", e => {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+        (e.ctrlKey && (e.key === "U" || e.key === "S" || e.key === "C" || e.key === "V" || e.key === "X"))
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        switchCount++;
+        alert("Warning: Tab switching is not allowed! Attempt " + switchCount);
+        if (switchCount >= 3) {
+          alert("You have switched tabs multiple times. Quiz will reset.");
+          restartQuiz();
+        }
+      }
+    });
+
+    function goToHomePage() {
+      localStorage.setItem("activeTab", "home");
+    }
+
+    function goToEditPage() {
+      localStorage.setItem("activeTab", "edit");
+    }
+
+    function goToMainPage() {
+      localStorage.setItem("activeTab", "trophy");
+      window.location.href = "index.html";
+    }
+
+    function goToWinnersPage() {
+      localStorage.setItem("activeTab", "check");
+      window.location.href = "winners.html";
+    }
+
+    // function goToProfilePage() {
+    //   localStorage.setItem("activeTab", "profile");
+    //   window.location.href = "profile.html";
+    // }
+
+    function highlightNavIcons() {
+      const activeTab = localStorage.getItem("activeTab");
+      const checkIcon = document.getElementById("checkNav");
+      const trophyIcon = document.getElementById("trophyNav");
+
+      if (checkIcon) {
+        checkIcon.src = activeTab === "check"
+          ? "imgs/icon-check-green.png"
+          : "imgs/icon-check-black.png";
+      }
+
+      if (trophyIcon) {
+        trophyIcon.src = activeTab === "trophy"
+          ? "imgs/icon-cup.png"
+          : "imgs/icon-cup-black.png";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      highlightNavIcons();
+      loadQuestion(current);
+      setInterval(updateClock, 60000);
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz Page - Class 10th</title>
   <style>
@@ -338,7 +895,7 @@
   </script>
 </body>
 </html>
-
+ -->
 
 
 
