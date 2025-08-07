@@ -242,6 +242,140 @@ body.dark .info-box .fee {
   }
 }
 
+    :root {
+  --drawer-width: 320px;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --drawer-bg-light: #fff;
+  --drawer-bg-dark: #1f1f1f;
+  --drawer-text-light: #000;
+  --drawer-text-dark: #eee;
+  --sidebar-item-bg-light: #f7f7f7;
+  --sidebar-item-bg-dark: #2b2b2b;
+  --sidebar-item-hover-light: #e0e0e0;
+  --sidebar-item-hover-dark: #444;
+  --sidebar-item-text-light: #000;
+  --sidebar-item-text-dark: #ddd;
+}
+
+/* Drawer styles */
+/* Drawer styles */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: var(--drawer-width);
+  height: 100%;
+  background: #200307;  /* Deep red color for the drawer */
+  color: #fff;  /* White text color */
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  transition: right var(--transition);
+  z-index: 100;
+  overflow-y: auto;
+}
+
+body.dark .drawer {
+  background: #200307;  /* Darker red for dark mode */
+  color: #eee;  /* Lighter text color in dark mode */
+}
+
+.drawer.open {
+  right: 0;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Drawer header */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer h2 {
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Profile Pic */
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px auto;
+  background-image: url('https://i.pravatar.cc/100');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Info */
+.profile-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-info h3 {
+  margin-bottom: 5px;
+  font-size: 1.3rem;
+}
+
+/* Sidebar Items */
+.sidebar-item {
+  background: var(--sidebar-item-bg-light);
+  color: var(--sidebar-item-text-light);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+body.dark .sidebar-item {
+  background: var(--sidebar-item-bg-dark);
+  color: var(--sidebar-item-text-dark);
+}
+
+.sidebar-item:hover {
+  background: var(--sidebar-item-hover-light);
+}
+
+body.dark .sidebar-item:hover {
+  background: var(--sidebar-item-hover-dark);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 400px) {
+  .drawer {
+    width: 100vw;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -300,7 +434,8 @@ body.dark .info-box .fee {
     <img id="Edit" src="https://img.icons8.com/?size=100&id=3H7TP0gx37mp&format=png" alt="Edit" onclick="goToEditPage()" />
     <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
     <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
-    <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" onclick="goToProfilePage()" />
+    <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" />
+<!--     <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" onclick="goToProfilePage()" /> -->
   </div>
 
   <script>
@@ -350,6 +485,37 @@ body.dark .info-box .fee {
           : "imgs/icon-cup-black.png";
       }
     }
+
+    // Profile Drawer
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('overlay');
+
+function openDrawer() {
+  drawer.classList.add('open');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden'; // Prevent scrolling when the drawer is open
+}
+
+function closeDrawer() {
+  drawer.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = ''; // Restore scroll when the drawer is closed
+}
+
+// Open drawer when Profile icon is clicked
+document.getElementById("Profile").addEventListener("click", function (e) {
+  e.preventDefault();
+  openDrawer();
+});
+
+// Close drawer if the user presses the Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeDrawer();
+});
+
+// Close drawer if overlay is clicked
+overlay.addEventListener("click", closeDrawer);
+
 
     document.addEventListener("DOMContentLoaded", highlightNavIcons);
   </script>
@@ -588,4 +754,5 @@ body.dark .info-box .fee {
 </body>
 </html>
  -->
+
 
