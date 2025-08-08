@@ -397,12 +397,15 @@ body.dark .sidebar-item:hover {
     <div class="winner bronze">Suman Kumar - 25 (6 min 02 sec)</div>
   </div>
 
-  <!-- Quiz Calendar and History Section -->
-<div class="container" id="calendarSection">
-  <h3>View Previous Quizzes</h3>
-  <input type="date" id="quizDatePicker" onchange="loadQuizData()" />
+<div class="info-box" id="previousQuizSection">
+  <h3>📅 पिछले क्विज़ का डेटा देखें</h3>
+
+  <p>किसी भी तारीख का क्विज़ देखने के लिए नीचे तारीख चुनें:</p>
+
+  <input type="date" id="quizDatePicker" onchange="loadQuizData()" style="padding: 10px; margin: 15px 0; font-size: 16px; border-radius: 8px; border: 1px solid #ccc;" />
+
   <div id="quizResults" style="margin-top: 20px;">
-    <!-- Dynamically loaded content will appear here -->
+    <p>📌 कोई तारीख चुनें और डेटा यहाँ दिखेगा।</p>
   </div>
 </div>
 
@@ -468,23 +471,22 @@ body.dark .sidebar-item:hover {
 
   <script>
 
-
-      // Dummy quiz data for example
+  // Simulated backend data
   const quizHistory = {
     "2025-08-01": {
       questions: 50,
       winners: [
-        { name: "Rahul Sharma", time: "5 min 35 sec", score: 25 },
-        { name: "Anita Verma", time: "5 min 50 sec", score: 25 },
-        { name: "Amit Das", time: "6 min 10 sec", score: 24 }
+        { name: "Rahul Sharma", time: "5m 35s", score: 25 },
+        { name: "Anita Verma", time: "5m 50s", score: 25 },
+        { name: "Amit Das", time: "6m 10s", score: 24 }
       ]
     },
     "2025-08-02": {
       questions: 40,
       winners: [
-        { name: "Kiran Devi", time: "4 min 50 sec", score: 23 },
-        { name: "Rajeev Kumar", time: "5 min 20 sec", score: 22 },
-        { name: "Tina Roy", time: "6 min 00 sec", score: 22 }
+        { name: "Kiran Devi", time: "4m 50s", score: 23 },
+        { name: "Rajeev Kumar", time: "5m 20s", score: 22 },
+        { name: "Tina Roy", time: "6m 00s", score: 22 }
       ]
     }
     // Add more dates as needed
@@ -493,24 +495,28 @@ body.dark .sidebar-item:hover {
   function loadQuizData() {
     const selectedDate = document.getElementById("quizDatePicker").value;
     const container = document.getElementById("quizResults");
-    container.innerHTML = ""; // Clear previous data
+
+    if (!selectedDate) return;
+
+    container.innerHTML = "";
 
     if (quizHistory[selectedDate]) {
       const quiz = quizHistory[selectedDate];
-
-      let html = `<h4>Quiz on ${selectedDate}</h4>`;
-      html += `<p>Total Questions: ${quiz.questions}</p>`;
-      html += `<h4>Winners:</h4>`;
+      let html = `
+        <p><strong>📘 कुल प्रश्न:</strong> ${quiz.questions}</p>
+        <h4>🏆 विजेता:</h4>
+        <ul>
+      `;
 
       quiz.winners.forEach((winner, index) => {
-        const classes = ["gold", "silver", "bronze"];
-        const rankClass = classes[index] || "";
-        html += `<div class="winner ${rankClass}">${winner.name} - ${winner.score} (${winner.time})</div>`;
+        const medals = ["🥇", "🥈", "🥉"];
+        html += `<li>${medals[index] || "✅"} <span class="highlight">${winner.name}</span> – ${winner.score} अंक (${winner.time})</li>`;
       });
 
+      html += "</ul>";
       container.innerHTML = html;
     } else {
-      container.innerHTML = "<p>No quiz data available for this date.</p>";
+      container.innerHTML = "<p class='green'>❌ इस तारीख के लिए कोई डेटा नहीं मिला।</p>";
     }
   }
 
@@ -830,6 +836,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
