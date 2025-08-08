@@ -397,6 +397,15 @@ body.dark .sidebar-item:hover {
     <div class="winner bronze">Suman Kumar - 25 (6 min 02 sec)</div>
   </div>
 
+  <!-- Quiz Calendar and History Section -->
+<div class="container" id="calendarSection">
+  <h3>View Previous Quizzes</h3>
+  <input type="date" id="quizDatePicker" onchange="loadQuizData()" />
+  <div id="quizResults" style="margin-top: 20px;">
+    <!-- Dynamically loaded content will appear here -->
+  </div>
+</div>
+
 <!-- <div class="info-box">
   <h3>✨ <span class="highlight">भागलपुर जिला</span> के छात्रों के लिए <span class="highlight">सुनहरा अवसर</span> ✨</h3>
 
@@ -458,6 +467,54 @@ body.dark .sidebar-item:hover {
 
 
   <script>
+
+
+      // Dummy quiz data for example
+  const quizHistory = {
+    "2025-08-01": {
+      questions: 50,
+      winners: [
+        { name: "Rahul Sharma", time: "5 min 35 sec", score: 25 },
+        { name: "Anita Verma", time: "5 min 50 sec", score: 25 },
+        { name: "Amit Das", time: "6 min 10 sec", score: 24 }
+      ]
+    },
+    "2025-08-02": {
+      questions: 40,
+      winners: [
+        { name: "Kiran Devi", time: "4 min 50 sec", score: 23 },
+        { name: "Rajeev Kumar", time: "5 min 20 sec", score: 22 },
+        { name: "Tina Roy", time: "6 min 00 sec", score: 22 }
+      ]
+    }
+    // Add more dates as needed
+  };
+
+  function loadQuizData() {
+    const selectedDate = document.getElementById("quizDatePicker").value;
+    const container = document.getElementById("quizResults");
+    container.innerHTML = ""; // Clear previous data
+
+    if (quizHistory[selectedDate]) {
+      const quiz = quizHistory[selectedDate];
+
+      let html = `<h4>Quiz on ${selectedDate}</h4>`;
+      html += `<p>Total Questions: ${quiz.questions}</p>`;
+      html += `<h4>Winners:</h4>`;
+
+      quiz.winners.forEach((winner, index) => {
+        const classes = ["gold", "silver", "bronze"];
+        const rankClass = classes[index] || "";
+        html += `<div class="winner ${rankClass}">${winner.name} - ${winner.score} (${winner.time})</div>`;
+      });
+
+      container.innerHTML = html;
+    } else {
+      container.innerHTML = "<p>No quiz data available for this date.</p>";
+    }
+  }
+
+    
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
     }
@@ -773,6 +830,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
