@@ -481,28 +481,27 @@ body.dark .sidebar-item:hover {
   </header>
 
    <div class="container">
-        <div class="class">Class 12th</div>
-        <div class="quiz-time">Quiz Starts In</div>
-        <div class="time-highlight">08:00 PM to 08:30 PM</div>
+<div class="container">
+    <div class="class">Class 12th</div>
+    <div class="quiz-time">Quiz Starts In</div>
+    <div class="time-highlight">08:00 PM to 08:30 PM</div>
 
-        <div class="countdown-wrapper">
-            <div class="countdown-item">
-                <span class="icon">⏰</span>
-                <span id="hours">00</span>
-                <div class="label">Hours</div>
-            </div>
-            <div class="countdown-item">
-                <span class="icon">🕑</span>
-                <span id="minutes">00</span>
-                <div class="label">Minutes</div>
-            </div>
-            <div class="countdown-item">
-                <span class="icon">⏱️</span>
-                <span id="seconds">00</span>
-                <div class="label">Seconds</div>
-            </div>
-        </div>
-    </div>
+    <div class="countdown-wrapper">
+      <div class="countdown-item">
+        <span class="icon">⏰</span>
+        <span id="hours">00</span>
+        <div class="label">Hours</div>
+      </div>
+      <div class="countdown-item">
+        <span class="icon">🕑</span>
+        <span id="minutes">00</span>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="countdown-item">
+        <span class="icon">⏱️</span>
+        <span id="seconds">00</span>
+        <div class="label">Seconds</div>
+      </div>
 
     <div class="progress-text">1000+ Students Joined</div>
     <div class="progress-bar"></div>
@@ -587,47 +586,38 @@ body.dark .sidebar-item:hover {
   <script>
      // Function to get the next 8:00 PM
         function getNext8PM() {
-            const now = new Date();
-            const next8PM = new Date();
-            next8PM.setHours(20, 0, 0, 0); // Set time to 8 PM today
-            if (now >= next8PM) {
-                next8PM.setDate(next8PM.getDate() + 1); // Set to 8 PM the next day if it's already past 8 PM today
-            }
-            return next8PM;
-        }
+            function getNext8PM() {
+      const now = new Date();
+      const next8PM = new Date();
+      next8PM.setHours(20, 0, 0, 0);
+      if (now >= next8PM) {
+        next8PM.setDate(next8PM.getDate() + 1);
+      }
+      return next8PM;
+    }
 
-        // Function to update the countdown
-        function updateCountdown() {
-            const now = new Date();
-            const target = getNext8PM();
-            const diff = target - now;
+    function updateCountdown() {
+      const now = new Date();
+      const target = getNext8PM();
+      const diff = target - now;
 
-            // If the countdown is over, display "QUIZ STARTED" and stop the timer
-            if (diff <= 0) {
-                document.querySelector(".countdown-wrapper").innerHTML = "<h3>QUIZ STARTED</h3>";
-                clearInterval(timer); // Stop the countdown timer
-                return;
-            }
+      if (diff <= 0) {
+        document.querySelector(".countdown-wrapper").innerHTML = "<h3>QUIZ STARTED</h3>";
+        clearInterval(timer);
+        return;
+      }
 
-            const hours24 = Math.floor(diff / (1000 * 60 * 60)); // Calculate hours remaining
-            const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0'); // Minutes
-            const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0'); // Seconds
+      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
 
-            // Convert 24-hour format to 12-hour format
-            let hours12 = hours24 % 12;
-            hours12 = hours12 === 0 ? 12 : hours12; // If it's 0, set to 12 for midnight or noon
-            const ampm = hours24 >= 12 ? 'PM' : 'AM'; // Determine AM or PM based on 24-hour format
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
 
-            // Update the HTML elements for hours, minutes, seconds, and AM/PM
-            document.getElementById("hours").textContent = String(hours12).padStart(2, '0');
-            document.getElementById("minutes").textContent = minutes;
-            document.getElementById("seconds").textContent = seconds;
-        }
-
-        // Start the countdown and update it every second
-        const timer = setInterval(updateCountdown, 1000);
-        updateCountdown(); // Initial call to update countdown immediately
-    
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
 
     document.querySelector(".join-btn").addEventListener("click", function () {
       document.getElementById("joinSpinner").style.display = "flex";
@@ -2336,6 +2326,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
