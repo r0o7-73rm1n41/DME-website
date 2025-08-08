@@ -667,6 +667,8 @@ body.dark .sidebar-item:hover {
       }
     }
 
+     document.addEventListener("DOMContentLoaded", highlightNavIcons);
+
     // Profile Drawer
 const drawer = document.getElementById('drawer');
 const overlay = document.getElementById('overlay');
@@ -697,8 +699,6 @@ document.addEventListener('keydown', (e) => {
 // Close drawer if overlay is clicked
 overlay.addEventListener("click", closeDrawer);
 
-
-    document.addEventListener("DOMContentLoaded", highlightNavIcons);
   </script>
 </body>
 </html>
@@ -2324,6 +2324,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
