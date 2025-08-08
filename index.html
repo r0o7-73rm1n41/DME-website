@@ -479,9 +479,7 @@ body.dark .sidebar-item:hover {
     <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
     <h2>UPCOMING QUIZ</h2>
   </header>
-<main>
-   <div class="container">
-<div class="container">
+ <div class="container">
     <div class="class">Class 12th</div>
     <div class="quiz-time">Quiz Starts In</div>
     <div class="time-highlight">08:00 PM to 08:30 PM</div>
@@ -502,6 +500,7 @@ body.dark .sidebar-item:hover {
         <span id="seconds">00</span>
         <div class="label">Seconds</div>
       </div>
+    </div>
 
     <div class="progress-text">1000+ Students Joined</div>
     <div class="progress-bar"></div>
@@ -585,52 +584,23 @@ body.dark .sidebar-item:hover {
 
   <script>
 
-    // Security: Use strict mode
-    'use strict';
-
-    // DOM Elements
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-    const joinBtn = document.getElementById('joinButton');
-    const spinnerOverlay = document.getElementById('joinSpinner');
-    const drawer = document.getElementById('drawer');
-    const overlay = document.getElementById('overlay');
-    const toast = document.getElementById('toast');
-    const darkIcon = document.getElementById('dark-icon');
-    const usernameEl = document.getElementById('username');
-    const userEmailEl = document.getElementById('user-email');
-
-    
-    
-     // Timezone handling - IST for India
-    const getNext8PM = () => {
+     function getNext8PM() {
       const now = new Date();
       const next8PM = new Date();
-      
-      // Set time to 8:00 PM in IST (UTC+5:30)
-      next8PM.setUTCHours(14, 30, 0, 0); // 20:00 IST = 14:30 UTC
-      
+      next8PM.setHours(20, 0, 0, 0);
       if (now >= next8PM) {
-        next8PM.setUTCDate(next8PM.getUTCDate() + 1);
+        next8PM.setDate(next8PM.getDate() + 1);
       }
-      
       return next8PM;
-    };
+    }
 
-    // Countdown Timer
-    const updateCountdown = () => {
+    function updateCountdown() {
       const now = new Date();
       const target = getNext8PM();
       const diff = target - now;
 
       if (diff <= 0) {
-        document.querySelector(".countdown-wrapper").innerHTML = `
-          <div style="color: white; padding: 1rem;">
-            <h3 style="margin: 0;">QUIZ STARTED</h3>
-            <p style="margin-top: 0.5rem;">Join immediately!</p>
-          </div>
-        `;
+        document.querySelector(".countdown-wrapper").innerHTML = "<h3>QUIZ STARTED</h3>";
         clearInterval(timer);
         return;
       }
@@ -639,10 +609,10 @@ body.dark .sidebar-item:hover {
       const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
       const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
 
-      hoursEl.textContent = hours;
-      minutesEl.textContent = minutes;
-      secondsEl.textContent = seconds;
-    };
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
 
     const timer = setInterval(updateCountdown, 1000);
     updateCountdown();
@@ -2354,6 +2324,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
