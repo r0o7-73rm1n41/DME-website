@@ -1,4 +1,595 @@
+
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Winners - Quiz</title>
+  <style>
+      * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #000;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background: linear-gradient(to right, #3b060e, #200307);
+      color: white;
+      padding: 40px 20px 33px;
+      position: relative;
+      text-align: center;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+
+    .logo img {
+      width: 60px;
+      max-width: 80px;
+      height: auto;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .container {
+      border: 3px solid red;
+      border-radius: 20px;
+      margin: 30px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      background-color: #fff;
+      transition: background 0.3s ease, color 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark .container {
+      background-color: #1e1e1e;
+    }
+
+    .container h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .trophy-icon {
+      font-size: 50px;
+      margin: 15px 0;
+    }
+
+    .winner {
+      font-size: 16px;
+      padding: 10px 0;
+    }
+
+    .gold::before { content: "🥇 "; }
+    .silver::before { content: "🥈 "; }
+    .bronze::before { content: "🥉 "; }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 2px solid red;
+      z-index: 99;
+      transition: background 0.3s ease;
+    }
+
+    body.dark .bottom-nav {
+      background: #222;
+    }
+
+    .bottom-nav img {
+      height: 30px;
+      width: 30px;
+    }
+
+    .trophy {
+      background-color: transparent;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 15px;
+      }
+
+      header h2 {
+        font-size: 20px;
+      }
+
+      .dark-toggle {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .winner {
+        font-size: 14px;
+      }
+
+      .trophy-icon {
+        font-size: 36px;
+      }
+    }
+
+
+
+.info-box {
+  max-width: 95%;
+  margin: 40px auto 100px;
+  background: linear-gradient(135deg, #fff7f7, #fefefe);
+  border-left: 6px solid red;
+  padding: 25px;
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #111;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  animation: fadeInSlide 0.7s ease-in-out;
+}
+
+body.dark .info-box {
+  background: linear-gradient(135deg, #1f1f1f, #292929);
+  color: #ddd;
+  border-left-color: #ff5555;
+}
+
+.info-box h3 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #b30000;
+}
+
+.info-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 15px 0;
+}
+
+.info-box ul li {
+  margin: 5px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+
+.info-box .highlight {
+  color: #d40000;
+  font-weight: 600;
+}
+
+.info-box .green {
+  color: green;
+  font-weight: 600;
+}
+
+.info-box .fee {
+  background: #fff0f0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #b30000;
+  margin-top: 20px;
+  font-size: 17px;
+}
+
+body.dark .info-box .fee {
+  background: #2b0f0f;
+}
+
+.info-box .contact p {
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .info-box {
+    font-size: 15px;
+    padding: 20px;
+  }
+
+  .info-box h3 {
+    font-size: 18px;
+  }
+
+  .info-box .fee {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
+    :root {
+  --drawer-width: 320px;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --drawer-bg-light: #fff;
+  --drawer-bg-dark: #1f1f1f;
+  --drawer-text-light: #000;
+  --drawer-text-dark: #eee;
+  --sidebar-item-bg-light: #f7f7f7;
+  --sidebar-item-bg-dark: #2b2b2b;
+  --sidebar-item-hover-light: #e0e0e0;
+  --sidebar-item-hover-dark: #444;
+  --sidebar-item-text-light: #000;
+  --sidebar-item-text-dark: #ddd;
+}
+
+/* Drawer styles */
+/* Drawer styles */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: var(--drawer-width);
+  height: 100%;
+  background: #200307;  /* Deep red color for the drawer */
+  color: #fff;  /* White text color */
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  transition: right var(--transition);
+  z-index: 100;
+  overflow-y: auto;
+}
+
+body.dark .drawer {
+  background: #200307;  /* Darker red for dark mode */
+  color: #eee;  /* Lighter text color in dark mode */
+}
+
+.drawer.open {
+  right: 0;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Drawer header */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer h2 {
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Profile Pic */
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px auto;
+  background-image: url('https://i.pravatar.cc/100');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Info */
+.profile-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-info h3 {
+  margin-bottom: 5px;
+  font-size: 1.3rem;
+}
+
+/* Sidebar Items */
+.sidebar-item {
+  background: var(--sidebar-item-bg-light);
+  color: var(--sidebar-item-text-light);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+body.dark .sidebar-item {
+  background: var(--sidebar-item-bg-dark);
+  color: var(--sidebar-item-text-dark);
+}
+
+.sidebar-item:hover {
+  background: var(--sidebar-item-hover-light);
+}
+
+body.dark .sidebar-item:hover {
+  background: var(--sidebar-item-hover-dark);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 400px) {
+  .drawer {
+    width: 100vw;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="imgs/logo-DME.png" alt="Logo">
+    </div>
+    <button class="dark-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌙</button>
+    <h2>Today's Quiz</h2>
+  </header>
+
+  <div class="container">
+    <h3>Today's Quiz Has Finished</h3>
+    <p>50 Questions Answered</p>
+    <div class="trophy-icon">🏆</div>
+    <h4>Congratulations To The Winners!</h4>
+    <div class="winner gold">Pramod Kumar - 25 (5 min 48 sec)</div>
+    <div class="winner silver">Gulshan Singh Rajput - 25 (5 min 50 sec)</div>
+    <div class="winner bronze">Suman Kumar - 25 (6 min 02 sec)</div>
+  </div>
+
+  <div class="info-box" id="previousQuizSection">
+    <h3>📅 View data from previous quizzes</h3>
+    <p>To view quiz for any date, select date below:</p>
+    <input type="date" id="quizDatePicker" onchange="loadQuizData()" />
+    <div id="quizResults" style="margin-top: 20px;">
+      <p>📌 Select a date and the data will appear here.</p>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <img id="Home" src="..." alt="Home" onclick="goToHomePage()" />
+    <img id="Edit" src="..." alt="Edit" onclick="goToEditPage()" />
+    <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
+    <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
+    <img id="Profile" src="..." alt="Profile" />
+  </div>
+
+  Overlay for Drawer 
+  <div class="overlay" id="overlay"></div>
+
+   Profile Drawer 
+  <aside class="drawer" id="drawer">
+    <div class="drawer-header">
+      <h2>Profile</h2>
+      <button class="close-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="profile-pic"></div>
+    <div class="profile-info">
+      <h3>Username</h3>
+      <p>example@user123</p>
+    </div>
+    <div class="sidebar-item">👤 Edit Profile</div>
+    <div class="sidebar-item">📜 My Quizzes</div>
+    <div class="sidebar-item">💳 Payment History</div>
+    <div class="sidebar-item">⚙️ Settings</div>
+    <div class="sidebar-item">🚪 Logout</div>
+  </aside>
+
+  <script>
+    // Save result
+    function saveQuizResult(date, result) {
+      const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+      history[date] = result;
+      localStorage.setItem('quizHistory', JSON.stringify(history));
+    }
+
+    // Load result
+    function loadQuizData() {
+      const selectedDate = document.getElementById("quizDatePicker").value;
+      const container = document.getElementById("quizResults");
+      const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+
+      container.innerHTML = "";
+
+      if (history[selectedDate]) {
+        const quiz = history[selectedDate];
+        let html = `
+          <p><strong>📘 Total Questions:</strong> ${quiz.totalQuestions}</p>
+          <p><strong>✅ Correct:</strong> ${quiz.answeredCorrect} | ❌ Wrong: ${quiz.answeredWrong}</p>
+          <p><strong>🎯 Accuracy:</strong> ${quiz.accuracy}%</p>
+          <p><strong>⏱️ Avg Time/Question:</strong> ${quiz.averageTimePerQuestion}</p>
+          <h4>🏆 Winners:</h4><ul>
+        `;
+        quiz.winners.forEach((w, i) => {
+          const medals = ["🥇","🥈","🥉"];
+          html += `<li>${medals[i] || "✅"} <span class="highlight">${w.name}</span> – ${w.score} (${w.time})</li>`;
+        });
+        html += "</ul>";
+        container.innerHTML = html;
+      } else {
+        container.innerHTML = "<p class='green'>❌ No data found for this date.</p>";
+      }
+    }
+
+    // Auto-save today's quiz
+    document.addEventListener("DOMContentLoaded", () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const existing = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+
+      if (!existing[today]) {
+        const correct = 48;
+        const total = 50;
+        const quizData = {
+          totalQuestions: total,
+          answeredCorrect: correct,
+          answeredWrong: total - correct,
+          accuracy: ((correct / total) * 100).toFixed(1),
+          averageTimePerQuestion: "14s",
+          winners: [
+            { name: "Pramod Kumar", score: 25, time: "5 min 48 sec" },
+            { name: "Gulshan Singh Rajput", score: 25, time: "5 min 50 sec" },
+            { name: "Suman Kumar", score: 25, time: "6 min 02 sec" }
+          ]
+        };
+        saveQuizResult(today, quizData);
+      }
+
+      highlightNavIcons();
+      applyDarkModeFromStorage();
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+
+    function applyDarkModeFromStorage() {
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark") {
+        document.body.classList.add("dark");
+      }
+    }
+
+    function goToHomePage() {
+      localStorage.setItem("activeTab", "home");
+    }
+
+    function goToEditPage() {
+      localStorage.setItem("activeTab", "edit");
+    }
+
+    function goToMainPage() {
+      localStorage.setItem("activeTab", "trophy");
+      window.location.href = "index.html";
+    }
+
+    function goToWinnersPage() {
+      localStorage.setItem("activeTab", "check");
+      window.location.href = "winners.html";
+    }
+
+    function highlightNavIcons() {
+      const activeTab = localStorage.getItem("activeTab");
+      const checkIcon = document.getElementById("checkNav");
+      const trophyIcon = document.getElementById("trophyNav");
+
+      if (checkIcon) {
+        checkIcon.src = activeTab === "check"
+          ? "imgs/icon-check-green.png"
+          : "imgs/icon-check-black.png";
+      }
+
+      if (trophyIcon) {
+        trophyIcon.src = activeTab === "trophy"
+          ? "imgs/icon-cup.png"
+          : "imgs/icon-cup-black.png";
+      }
+    }
+
+    // Drawer logic
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById("Profile").addEventListener("click", function (e) {
+      e.preventDefault();
+      openDrawer();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    overlay.addEventListener("click", closeDrawer);
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -439,7 +1030,7 @@ body.dark .sidebar-item:hover {
     <p>📲 <strong>WhatsApp / Call:</strong> 8578986352</p>
     <p>📧 <strong>Email:</strong> dailymind.edu@gmail.com</p>
   </div>
-</div> -->
+</div> 
 
   <div class="bottom-nav">
     <img id="Home" src="https://img.icons8.com/?size=100&id=Eyy3nmHIbCL8&format=png" alt="Home" onclick="goToHomePage()" />
@@ -447,10 +1038,10 @@ body.dark .sidebar-item:hover {
     <img id="trophyNav" src="imgs/icon-cup-black.png" alt="Trophy" onclick="goToMainPage()" />
     <img id="checkNav" src="imgs/icon-check-black.png" alt="Check" onclick="goToWinnersPage()" />
     <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" />
-<!--     <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" onclick="goToProfilePage()" /> -->
+<!--     <img id="Profile" src="https://img.icons8.com/?size=100&id=85147&format=png" alt="Profile" onclick="goToProfilePage()" /> 
   </div>
 
-  <!-- Profile Drawer -->
+  <!-- Profile Drawer 
 <aside class="drawer" id="drawer">
   <div class="drawer-header">
     <h2>Profile</h2>
@@ -472,25 +1063,60 @@ body.dark .sidebar-item:hover {
   <script>
 
   // Simulated backend data
-  const quizHistory = {
-    "2025-08-01": {
-      questions: 50,
-      winners: [
-        { name: "Rahul Sharma", time: "5m 35s", score: 25 },
-        { name: "Anita Verma", time: "5m 50s", score: 25 },
-        { name: "Amit Das", time: "6m 10s", score: 24 }
-      ]
-    },
-    "2025-08-02": {
-      questions: 40,
-      winners: [
-        { name: "Kiran Devi", time: "4m 50s", score: 23 },
-        { name: "Rajeev Kumar", time: "5m 20s", score: 22 },
-        { name: "Tina Roy", time: "6m 00s", score: 22 }
-      ]
-    }
-    // Add more dates as needed
-  };
+  // const quizHistory = {
+  //   "2025-08-01": {
+  //     questions: 50,
+  //     winners: [
+  //       { name: "Rahul Sharma", time: "5m 35s", score: 25 },
+  //       { name: "Anita Verma", time: "5m 50s", score: 25 },
+  //       { name: "Amit Das", time: "6m 10s", score: 24 }
+  //     ]
+  //   },
+  //   "2025-08-02": {
+  //     questions: 40,
+  //     winners: [
+  //       { name: "Kiran Devi", time: "4m 50s", score: 23 },
+  //       { name: "Rajeev Kumar", time: "5m 20s", score: 22 },
+  //       { name: "Tina Roy", time: "6m 00s", score: 22 }
+  //     ]
+  //   }
+  //   // Add more dates as needed
+  // };
+    const quizHistory = {
+  "2025-08-01": {
+    totalQuestions: 50,
+    answeredCorrect: 42,
+    answeredWrong: 8,
+    accuracy: 84.0, // percentage
+    averageTimePerQuestion: "14s", // or "0m 14s"
+    winners: [
+      { name: "Rahul Sharma", time: "5m 35s", score: 25 },
+      { name: "Anita Verma", time: "5m 50s", score: 25 },
+      { name: "Amit Das", time: "6m 10s", score: 24 }
+    ],
+    previousQuizzesSummary: [
+      { date: "2025-07-30", totalQuestions: 40, correct: 35, wrong: 5, accuracy: 87.5 },
+      { date: "2025-07-28", totalQuestions: 50, correct: 44, wrong: 6, accuracy: 88.0 }
+    ]
+  },
+  "2025-08-02": {
+    totalQuestions: 40,
+    answeredCorrect: 37,
+    answeredWrong: 3,
+    accuracy: 92.5,
+    averageTimePerQuestion: "13s",
+    winners: [
+      { name: "Kiran Devi", time: "4m 50s", score: 23 },
+      { name: "Rajeev Kumar", time: "5m 20s", score: 22 },
+      { name: "Tina Roy", time: "6m 00s", score: 22 }
+    ],
+    previousQuizzesSummary: [
+      { date: "2025-07-29", totalQuestions: 45, correct: 40, wrong: 5, accuracy: 88.9 },
+      { date: "2025-07-27", totalQuestions: 50, correct: 43, wrong: 7, accuracy: 86.0 }
+    ]
+  }
+  // Add more dates as needed
+};
 
   function loadQuizData() {
     const selectedDate = document.getElementById("quizDatePicker").value;
@@ -645,7 +1271,7 @@ overlay.addEventListener("click", closeDrawer);
   </script>
 </body>
 </html>
-
+ -->
 
 
 
@@ -878,6 +1504,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
