@@ -584,25 +584,34 @@ body.dark .sidebar-item:hover {
   </div>
 
   <script>
-     // Function to get the next 8:00 PM
-        function getNext8PM() {
-            function getNext8PM() {
+     // Timezone handling - IST for India
+    const getNext8PM = () => {
       const now = new Date();
       const next8PM = new Date();
-      next8PM.setHours(20, 0, 0, 0);
+      
+      // Set time to 8:00 PM in IST (UTC+5:30)
+      next8PM.setUTCHours(14, 30, 0, 0); // 20:00 IST = 14:30 UTC
+      
       if (now >= next8PM) {
-        next8PM.setDate(next8PM.getDate() + 1);
+        next8PM.setUTCDate(next8PM.getUTCDate() + 1);
       }
+      
       return next8PM;
-    }
+    };
 
-    function updateCountdown() {
+    // Countdown Timer
+    const updateCountdown = () => {
       const now = new Date();
       const target = getNext8PM();
       const diff = target - now;
 
       if (diff <= 0) {
-        document.querySelector(".countdown-wrapper").innerHTML = "<h3>QUIZ STARTED</h3>";
+        document.querySelector(".countdown-wrapper").innerHTML = `
+          <div style="color: white; padding: 1rem;">
+            <h3 style="margin: 0;">QUIZ STARTED</h3>
+            <p style="margin-top: 0.5rem;">Join immediately!</p>
+          </div>
+        `;
         clearInterval(timer);
         return;
       }
@@ -611,10 +620,10 @@ body.dark .sidebar-item:hover {
       const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
       const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
 
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-    }
+      hoursEl.textContent = hours;
+      minutesEl.textContent = minutes;
+      secondsEl.textContent = seconds;
+    };
 
     const timer = setInterval(updateCountdown, 1000);
     updateCountdown();
@@ -2326,6 +2335,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
