@@ -520,6 +520,48 @@ body.dark .sidebar-item:hover {
     }
   }
 
+    // Save result
+function saveQuizResult(date, result) {
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+  history[date] = result;
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+// Load result
+function loadQuizData() {
+  const selectedDate = document.getElementById("quizDatePicker").value;
+  const container = document.getElementById("quizResults");
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+
+  container.innerHTML = "";
+
+  if (history[selectedDate]) {
+    const quiz = history[selectedDate];
+    let html = `<p><strong>📘 Total Questions:</strong> ${quiz.questions}</p><h4>🏆 Winners:</h4><ul>`;
+    quiz.winners.forEach((w, i) => {
+      const medals = ["🥇","🥈","🥉"];
+      html += `<li>${medals[i] || "✅"} <span class="highlight">${w.name}</span> – ${w.score} (${w.time})</li>`;
+    });
+    html += '</ul>';
+    container.innerHTML = html;
+  } else {
+    container.innerHTML = "<p class='green'>❌ No data found for this date.</p>";
+  }
+}
+
+// Example: Save today's quiz upon completion
+document.addEventListener("DOMContentLoaded", () => {
+  const today = new Date().toISOString().slice(0,10);
+  saveQuizResult(today, {
+    questions: 50,
+    winners: [
+      { name: "Pramod Kumar", score: 25, time: "5 min 48 sec" },
+      { name: "Gulshan Singh Rajput", score: 25, time: "5 min 50 sec" },
+      { name: "Suman Kumar", score: 25, time: "6 min 02 sec" },
+    ]
+  });
+});
+
     
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
@@ -836,6 +878,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
