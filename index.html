@@ -584,6 +584,25 @@ body.dark .sidebar-item:hover {
   </div>
 
   <script>
+
+    // Security: Use strict mode
+    'use strict';
+
+    // DOM Elements
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const joinBtn = document.getElementById('joinButton');
+    const spinnerOverlay = document.getElementById('joinSpinner');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const toast = document.getElementById('toast');
+    const darkIcon = document.getElementById('dark-icon');
+    const usernameEl = document.getElementById('username');
+    const userEmailEl = document.getElementById('user-email');
+
+    
+    
      // Timezone handling - IST for India
     const getNext8PM = () => {
       const now = new Date();
@@ -2335,6 +2354,7 @@ overlay.addEventListener("click", closeDrawer);
 </body>
 </html>
  -->
+
 
 
 
