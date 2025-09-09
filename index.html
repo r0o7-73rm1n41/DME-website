@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Under Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(to right, #3b060e, #200307);
+      --primary-color: #00ff00;
+      --text-color: #ffffff;
+      --secondary-text: #cccccc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      animation: fadeInPage 1s ease-in-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      animation: logoBounce 2s infinite;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 100px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    @keyframes logoBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    p {
+      font-size: 1rem;
+      max-width: 500px;
+      color: var(--secondary-text);
+      animation: fadeIn 1.4s ease;
+    }
+
+    .illustration {
+      width: 100%;
+      max-width: 320px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #bbb;
+      animation: fadeIn 1.6s ease;
+    }
+
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid var(--primary-color);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .loading-text {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: var(--primary-color);
+      letter-spacing: 2px;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .contact {
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+      animation: fadeIn 1.8s ease;
+    }
+
+    .contact p {
+      margin: 6px 0;
+    }
+
+    .contact a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 15px 0;
+      font-size: 0.75rem;
+      color: #999;
+      text-align: center;
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border-width: 5px;
+      }
+
+      .illustration {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <img src="imgs/logo-DME.png" alt="DME Logo" />
+  </div>
+
+  <h1>🚧 Website Under Development</h1>
+  
+  <div class="illustration">
+      <p>We're building something amazing. Please stay tuned while we finish up!</p>
+    
+  </div>
+
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+
+  <div class="contact">
+    <p>📞 <strong>Contact:</strong> <a style="color: white; href="tel:8578986352">8578986352</a></p>
+    <p>📧 <strong>Email:</strong> <a style="color: white; href="mailto:dailymind.edu@gmail.com">dailymind.edu@gmail.com</a></p>
+  </div>
+
+  <footer>
+    © 2025 Daily Mind Education. All rights reserved.
+  </footer>
+
+</body>
+</html>
